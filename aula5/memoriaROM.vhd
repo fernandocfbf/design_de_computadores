@@ -22,6 +22,10 @@ architecture assincrona of memoriaROM is
   constant LDI  : std_logic_vector(3 downto 0) := "0100" ;
   constant STA  : std_logic_vector(3 downto 0) := "0101" ;
   constant JMP  : std_logic_vector(3 downto 0) := "0110" ;
+  constant JEQ  : std_logic_vector(3 downto 0) := "0111" ;
+  constant CEQ  : std_logic_vector(3 downto 0) := "1000" ;
+  constant JSR  : std_logic_vector(3 downto 0) := "1001" ;
+  constant RET  : std_logic_vector(3 downto 0) := "1010" ;
   
   type blocoMemoria is array(0 TO 2**addrWidth - 1) of std_logic_vector(dataWidth-1 DOWNTO 0);
 
@@ -31,22 +35,22 @@ architecture assincrona of memoriaROM is
       -- CTRL = SelMUX, Habilita_A, Reset_A, Operacao_ULA
       -- Inicializa os endereços:
       --                 CTRL   Prox Estado
-	  tmp(0)  := NOP & '0' & x"00";
-	  tmp(1)  := LDI & '0' & x"02";   -- Desta posicao para baixo, é necessário acertar o CTRL
-	  tmp(2)  := STA & '1' & x"00";	-- acessando a posicao 256; A8=1
-	  tmp(3)  := SOMA & '1' & x"00";
-	  tmp(4)  := SOMA & '1' & x"00";  --3x
-	  tmp(5)  := STA & '1'  & x"00";  -- salva na posicao 0 3x ; A: acumulador 
-	  tmp(6)  := LDI & '0' & x"04";
-	  tmp(7)  := STA & '1' & x"01";
-	  tmp(8)  := LDA & '1' & x"00";
-	  tmp(9)  := SUB & '1' & x"01";   -- 3x - 4 ; resultado ficou em A (acumulador)
-	  tmp(10) := STA & '1' & x"00" ;  -- salva na posicao 0 só pra testar
---	  tmp(11) := NOP ;  -- nao precisa dessas pra baixo pq ja esta na init da memoria
---	  tmp(12) := NOP ;
---	  tmp(13) := NOP ;
---	  tmp(14) := NOP ;
---	  tmp(15) := NOP ;
+	   tmp(0)  := LDI & '0' & x"04";
+      tmp(1)  := STA & '1' & x"01";   -- Desta posicao para baixo, é necessário acertar o CTRL
+      tmp(2)  := CEQ & '1' & x"01";
+      tmp(3)  := JEQ & '0' & x"0B";
+      tmp(4)  := SUB & '1' & x"01";
+      tmp(5)  := SOMA &'1' & x"01";
+      tmp(6)  := LDA &'1' & x"00";
+      tmp(7)  := LDI & '0' & x"20";
+      tmp(8)  := JSR & '0' & x"0C";
+      tmp(9)  := JMP & '0' & x"01";
+      tmp(10) := NOP & '0' & x"00";
+      tmp(11) := JMP & '0' & x"04";
+      tmp(12) := LDI & '0' & x"10";
+      tmp(13) := RET & '0' & x"00";
+      tmp(14) := NOP & '0' & x"00";
+      tmp(15) := NOP & '0' & x"00";
 	  return tmp;
     end initMemory;
 

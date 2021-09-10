@@ -8,9 +8,9 @@ entity aula5 is
   );
   port   (
     CLOCK_50 : in std_logic;
-    KEY: in std_logic_vector(3 downto 0)
---    SW: in std_logic_vector(9 downto 0);
---    LEDR  : out std_logic_vector(9 downto 0)
+    KEY: in std_logic_vector(3 downto 0);
+    --SW: in std_logic_vector(9 downto 0);
+    LEDR  : out std_logic_vector(7 downto 0)
   );
 end entity;
 
@@ -23,6 +23,7 @@ architecture arquitetura of aula5 is
   signal MUX_REG1 : std_logic_vector (larguraDados-1 downto 0);
   signal REG1_ULA_A : std_logic_vector (larguraDados-1 downto 0);
   signal Saida_ULA : std_logic_vector (larguraDados-1 downto 0);
+  signal Saida_ULA_flag : std_logic;
   signal instrucao : std_logic_vector (12 downto 0);
   signal PC_ROM : std_logic_vector (8 downto 0);
   signal SOMADOR_MUX : std_logic_vector (8 downto 0);
@@ -31,12 +32,20 @@ architecture arquitetura of aula5 is
   signal CLK : std_logic;
   signal SelMUX : std_logic;
   signal SelMUXJUMP : std_logic;
+  signal Logica_Mux : std_logic_vector (1 downto 0);
   signal Habilita_A : std_logic;
   signal Operacao_ULA : std_logic_vector (1 downto 0);
   signal habLeituraMEM : std_logic;
   signal habEscritaMEM : std_logic;
-  signal PontosDeControle: std_logic_vector (6 downto 0);
+  signal habFlagIgual : std_logic;
+  signal habEscritaRetorno : std_logic;
+  signal Flag_Log : std_logic;
+  signal JEQ : std_logic;
+  signal RET : std_logic;
+  signal JSR : std_logic;
+  signal PontosDeControle: std_logic_vector (11 downto 0);
   signal RAM_MUX : std_logic_vector (7 downto 0);
+  signal Saida_End_retorno : std_logic_vector (8 downto 0);
   
 begin
 
@@ -57,15 +66,22 @@ MUX1 :  entity work.muxGenerico2x1  generic map (larguraDados => larguraDados)
                  seletor_MUX => SelMUX,
                  saida_MUX => MUX_ULA_B);
 
-MUXJUMP :  entity work.muxGenerico2x1  generic map (larguraDados => 9)
+MUXJUMP :  entity work.muxGenericoJUMP  generic map (larguraDados => 9)
         port map( entradaA_MUX => SOMADOR_MUX,
                  entradaB_MUX =>  instrucao(8 downto 0),
-                 seletor_MUX => SelMUXJUMP,
+					  entradaC_MUX => Saida_End_retorno,
+                 seletor_MUX => Logica_Mux,
                  saida_MUX => MUXJUMP_PC);
 
 -- O port map completo do Acumulador.
 REG1 : entity work.registradorGenerico   generic map (larguraDados => larguraDados)
           port map (DIN => Saida_ULA, DOUT => REG1_ULA_A, ENABLE => Habilita_A, CLK => CLK, RST => '0');
+
+FLAG : entity work.registradorFlag   generic map (larguraDados => larguraDados)
+          port map (DIN => Saida_ULA_flag, DOUT => Flag_Log, ENABLE => HabFlagIgual, CLK => CLK, RST => '0');
+			 
+END_RETORNO : entity work.end_retorno  generic map (larguraDados => larguraDados)
+          port map (DIN => SOMADOR_MUX , DOUT => Saida_End_retorno, ENABLE => HabEscritaRetorno, CLK => CLK, RST => '0');
 
 -- O botao 3 faz o Reset da MEF:
 PC : entity work.registradorGenerico   generic map (larguraDados => 9)
@@ -74,7 +90,7 @@ PC : entity work.registradorGenerico   generic map (larguraDados => 9)
 	
 -- O port map completo da ULA:
 ULA1 : entity work.ULASomaSub  generic map(larguraDados => larguraDados)
-          port map (entradaA => REG1_ULA_A, entradaB => MUX_ULA_B, saida => Saida_ULA, seletor => Operacao_ULA);
+          port map (entradaA => REG1_ULA_A, entradaB => MUX_ULA_B, saida => Saida_ULA,saida_flag => Saida_ULA_flag , seletor => Operacao_ULA);
 
 -- Falta acertar o conteudo da ROM (no arquivo memoriaROM.vhd)
 ROM1 : entity work.memoriaROM   generic map (dataWidth => 13, addrWidth => 9)
@@ -90,12 +106,21 @@ SOMACONSTANTE :  entity work.somaConstante  generic map (larguraDados => 9, cons
 DECODER: entity work.decodificador
         port map( opcode => instrucao(12 downto 9), PontosDeControle => PontosDeControle);
 
-habEscritaMEM <= PontosDeControle(6);
-habLeituraMEM <= PontosDeControle(5);
-selMUX <= PontosDeControle(1);
-Habilita_A <= PontosDeControle(2);	
+logica_de_desvio: entity work.logica_de_desvio
+        port map( flag => Flag_Log, jeq => JEQ, ret => RET, jsr  => JSR ,SelMuxJump =>SelMUXJUMP, dataOUT=>Logica_Mux);
+		  
+		  
+habEscritaMEM <= PontosDeControle(0);
+habLeituraMEM <= PontosDeControle(1);
+selMUX <= PontosDeControle(6);
+Habilita_A <= PontosDeControle(5);	
 Operacao_ULA <= PontosDeControle(4 downto 3);
-SelMUXJUMP <= PontosDeControle(0);
+SelMUXJUMP <= PontosDeControle(10);
+JEQ <= PontosDeControle(7);
+habFlagIgual <= PontosDeControle(2);
+habEscritaRetorno <= PontosDeControle(11);
+RET <= PontosDeControle(9);
+JSR <= PontosDeControle(8);
 
 -- I/O
 --chavesY_MUX_A <= SW(3 downto 0);
@@ -108,6 +133,6 @@ SelMUXJUMP <= PontosDeControle(0);
 --LEDR (6) <= Operacao_ULA;
 --LEDR (5) <= '0';    -- Apagado.
 --LEDR (4) <= '0';    -- Apagado.
---LEDR (3 downto 0) <= REG1_ULA_A;
+LEDR <= REG1_ULA_A;
 
 end architecture;

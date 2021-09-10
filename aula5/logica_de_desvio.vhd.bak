@@ -1,0 +1,41 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity Logica_de_desvio is
+  generic   (
+    DATA_WIDTH  : natural :=  8;
+    ADDR_WIDTH  : natural :=  8
+  );
+
+  port   (
+    -- Input ports
+    flag  :  in  std_logic;
+	 jeq  :  in  std_logic);
+	 SelMuxJump  :  in  std_logic;
+    
+    -- Output ports
+    dataOUT :  out std_logic;
+  );
+end entity;
+
+
+architecture arch_name of Logica_de_desvio is
+
+  -- Declarations (optional):
+  -- signal <name> : std_logic;
+  -- signal <name> : std_logic_vector(<msb_index> downto <lsb_index>);
+  -- constant FUNCT_WIDTH : natural := 6;
+  -- subtype funct_t  is  std_logic_vector(FUNCT_WIDTH-1 downto 0);
+  -- constant functADD   : funct_t := "100000";
+  -- constant functSUB   : funct_t := "100010";
+  -- alias memWRsignal: std_logic is controlWord(0);
+  -- alias ulaOPvalue:  std_logic_vector(1 downto 0) is controlWord(5 downto 4);
+
+begin
+	dataOUT<= 
+	'1' when SelMuxJump = '1' else
+	'1' when jeq = '1' and flag = '1' else 
+	'0';
+
+end architecture;
