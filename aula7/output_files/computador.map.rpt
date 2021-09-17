@@ -1,0 +1,451 @@
+Analysis & Elaboration report for computador
+Fri Sep 17 11:12:30 2021
+Quartus Prime Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Elaboration Summary
+  3. Parallel Compilation
+  4. Parameter Settings for User Entity Instance: Top-level Entity: |computador
+  5. Parameter Settings for User Entity Instance: cpu:CPU1
+  6. Parameter Settings for User Entity Instance: cpu:CPU1|muxGenerico2x1:MUX1
+  7. Parameter Settings for User Entity Instance: cpu:CPU1|muxGenericoJUMP:MUXJUMP
+  8. Parameter Settings for User Entity Instance: cpu:CPU1|registradorGenerico:REG1
+  9. Parameter Settings for User Entity Instance: cpu:CPU1|registradorFlag:FLAG
+ 10. Parameter Settings for User Entity Instance: cpu:CPU1|end_retorno:END_RETORNO
+ 11. Parameter Settings for User Entity Instance: cpu:CPU1|registradorGenerico:PC
+ 12. Parameter Settings for User Entity Instance: cpu:CPU1|ULASomaSub:ULA1
+ 13. Parameter Settings for User Entity Instance: cpu:CPU1|somaConstante:SOMACONSTANTE
+ 14. Parameter Settings for User Entity Instance: cpu:CPU1|Logica_de_desvio:logica_de_desvio
+ 15. Parameter Settings for User Entity Instance: memoriaROM:ROM1
+ 16. Parameter Settings for User Entity Instance: memoriaRAM:RAM1
+ 17. Analysis & Elaboration Settings
+ 18. Port Connectivity Checks: "decodificador3x8:DECODIFICADO_BLOCO"
+ 19. Port Connectivity Checks: "cpu:CPU1|registradorGenerico:PC"
+ 20. Port Connectivity Checks: "cpu:CPU1|end_retorno:END_RETORNO"
+ 21. Port Connectivity Checks: "cpu:CPU1|registradorFlag:FLAG"
+ 22. Port Connectivity Checks: "cpu:CPU1|registradorGenerico:REG1"
+ 23. Analysis & Elaboration Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2020  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+
+
+
++-----------------------------------------------------------------------------+
+; Analysis & Elaboration Summary                                              ;
++-------------------------------+---------------------------------------------+
+; Analysis & Elaboration Status ; Successful - Fri Sep 17 11:12:30 2021       ;
+; Quartus Prime Version         ; 20.1.0 Build 711 06/05/2020 SJ Lite Edition ;
+; Revision Name                 ; computador                                  ;
+; Top-level Entity Name         ; computador                                  ;
+; Family                        ; Cyclone V                                   ;
+; Logic utilization (in ALMs)   ; N/A until Partition Merge                   ;
+; Total registers               ; N/A until Partition Merge                   ;
+; Total pins                    ; N/A until Partition Merge                   ;
+; Total virtual pins            ; N/A until Partition Merge                   ;
+; Total block memory bits       ; N/A until Partition Merge                   ;
+; Total PLLs                    ; N/A until Partition Merge                   ;
+; Total DLLs                    ; N/A until Partition Merge                   ;
++-------------------------------+---------------------------------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 1           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |computador ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; larguraDados   ; 8     ; Signed Integer                                    ;
+; ADDR_WIDTH     ; 8     ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1 ;
++----------------+-------+------------------------------+
+; Parameter Name ; Value ; Type                         ;
++----------------+-------+------------------------------+
+; larguradados   ; 8     ; Signed Integer               ;
+; simulacao      ; true  ; Enumerated                   ;
++----------------+-------+------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|muxGenerico2x1:MUX1 ;
++----------------+-------+--------------------------------------------------+
+; Parameter Name ; Value ; Type                                             ;
++----------------+-------+--------------------------------------------------+
+; larguradados   ; 8     ; Signed Integer                                   ;
++----------------+-------+--------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|muxGenericoJUMP:MUXJUMP ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; larguradados   ; 9     ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|registradorGenerico:REG1 ;
++----------------+-------+-------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                  ;
++----------------+-------+-------------------------------------------------------+
+; larguradados   ; 8     ; Signed Integer                                        ;
++----------------+-------+-------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|registradorFlag:FLAG ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; larguradados   ; 8     ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|end_retorno:END_RETORNO ;
++----------------+-------+------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                 ;
++----------------+-------+------------------------------------------------------+
+; larguradados   ; 8     ; Signed Integer                                       ;
++----------------+-------+------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|registradorGenerico:PC ;
++----------------+-------+-----------------------------------------------------+
+; Parameter Name ; Value ; Type                                                ;
++----------------+-------+-----------------------------------------------------+
+; larguradados   ; 9     ; Signed Integer                                      ;
++----------------+-------+-----------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|ULASomaSub:ULA1 ;
++----------------+-------+----------------------------------------------+
+; Parameter Name ; Value ; Type                                         ;
++----------------+-------+----------------------------------------------+
+; larguradados   ; 8     ; Signed Integer                               ;
++----------------+-------+----------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|somaConstante:SOMACONSTANTE ;
++----------------+-------+----------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                     ;
++----------------+-------+----------------------------------------------------------+
+; larguradados   ; 9     ; Signed Integer                                           ;
+; constante      ; 1     ; Signed Integer                                           ;
++----------------+-------+----------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: cpu:CPU1|Logica_de_desvio:logica_de_desvio ;
++----------------+-------+----------------------------------------------------------------+
+; Parameter Name ; Value ; Type                                                           ;
++----------------+-------+----------------------------------------------------------------+
+; data_width     ; 8     ; Signed Integer                                                 ;
+; addr_width     ; 8     ; Signed Integer                                                 ;
++----------------+-------+----------------------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: memoriaROM:ROM1 ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; datawidth      ; 13    ; Signed Integer                      ;
+; addrwidth      ; 9     ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: memoriaRAM:RAM1 ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; datawidth      ; 8     ; Signed Integer                      ;
+; addrwidth      ; 6     ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Elaboration Settings                                                                                           ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                          ; Setting            ; Default Value      ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                          ; 5CEBA4F23C7        ;                    ;
+; Top-level entity name                                                           ; computador         ; computador         ;
+; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
+; Maximum processors allowed for parallel compilation                             ; All                ;                    ;
+; VHDL Show LMF Mapping Messages                                                  ; Off                ;                    ;
+; VHDL Version                                                                    ; VHDL_2008          ; VHDL_1993          ;
+; Use smart compilation                                                           ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
+; Enable compact report table                                                     ; Off                ; Off                ;
+; Restructure Multiplexers                                                        ; Auto               ; Auto               ;
+; MLAB Add Timing Constraints For Mixed-Port Feed-Through Mode Setting Don't Care ; Off                ; Off                ;
+; Create Debugging Nodes for IP Cores                                             ; Off                ; Off                ;
+; Preserve fewer node names                                                       ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                                   ; Enable             ; Enable             ;
+; Verilog Version                                                                 ; Verilog_2001       ; Verilog_2001       ;
+; State Machine Processing                                                        ; Auto               ; Auto               ;
+; Safe State Machine                                                              ; Off                ; Off                ;
+; Extract Verilog State Machines                                                  ; On                 ; On                 ;
+; Extract VHDL State Machines                                                     ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                               ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                      ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                                  ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                         ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                       ; On                 ; On                 ;
+; Parallel Synthesis                                                              ; On                 ; On                 ;
+; DSP Block Balancing                                                             ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                              ; On                 ; On                 ;
+; Power-Up Don't Care                                                             ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                                    ; Off                ; Off                ;
+; Remove Duplicate Registers                                                      ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                            ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                          ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                           ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                       ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                            ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                             ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                                  ; Off                ; Off                ;
+; Optimization Technique                                                          ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                              ; 70                 ; 70                 ;
+; Auto Carry Chains                                                               ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                            ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                           ; Off                ; Off                ;
+; Auto ROM Replacement                                                            ; On                 ; On                 ;
+; Auto RAM Replacement                                                            ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                      ; On                 ; On                 ;
+; Auto Shift Register Replacement                                                 ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                                 ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                                   ; On                 ; On                 ;
+; Strict RAM Replacement                                                          ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                               ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                           ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                              ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                                   ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                             ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                               ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                         ; On                 ; On                 ;
+; Report Parameter Settings                                                       ; On                 ; On                 ;
+; Report Source Assignments                                                       ; On                 ; On                 ;
+; Report Connectivity Checks                                                      ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                              ; Off                ; Off                ;
+; Synchronization Register Chain Length                                           ; 3                  ; 3                  ;
+; Power Optimization During Synthesis                                             ; Normal compilation ; Normal compilation ;
+; HDL message level                                                               ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                                 ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                        ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                              ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                       ; 100                ; 100                ;
+; Clock MUX Protection                                                            ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                     ; Off                ; Off                ;
+; Block Design Naming                                                             ; Auto               ; Auto               ;
+; SDC constraint protection                                                       ; Off                ; Off                ;
+; Synthesis Effort                                                                ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal                    ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                            ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                              ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                     ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                          ; On                 ; On                 ;
+; Automatic Parallel Synthesis                                                    ; On                 ; On                 ;
+; Partial Reconfiguration Bitstream ID                                            ; Off                ; Off                ;
++---------------------------------------------------------------------------------+--------------------+--------------------+
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "decodificador3x8:DECODIFICADO_BLOCO"                                                ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; s1   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; s2   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; s3   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; s4   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; s5   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; s6   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; s7   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-------------------------------------------------------------+
+; Port Connectivity Checks: "cpu:CPU1|registradorGenerico:PC" ;
++--------+-------+----------+---------------------------------+
+; Port   ; Type  ; Severity ; Details                         ;
++--------+-------+----------+---------------------------------+
+; enable ; Input ; Info     ; Stuck at VCC                    ;
+; rst    ; Input ; Info     ; Stuck at GND                    ;
++--------+-------+----------+---------------------------------+
+
+
++--------------------------------------------------------------+
+; Port Connectivity Checks: "cpu:CPU1|end_retorno:END_RETORNO" ;
++------+-------+----------+------------------------------------+
+; Port ; Type  ; Severity ; Details                            ;
++------+-------+----------+------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                       ;
++------+-------+----------+------------------------------------+
+
+
++-----------------------------------------------------------+
+; Port Connectivity Checks: "cpu:CPU1|registradorFlag:FLAG" ;
++------+-------+----------+---------------------------------+
+; Port ; Type  ; Severity ; Details                         ;
++------+-------+----------+---------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                    ;
++------+-------+----------+---------------------------------+
+
+
++---------------------------------------------------------------+
+; Port Connectivity Checks: "cpu:CPU1|registradorGenerico:REG1" ;
++------+-------+----------+-------------------------------------+
+; Port ; Type  ; Severity ; Details                             ;
++------+-------+----------+-------------------------------------+
+; rst  ; Input ; Info     ; Stuck at GND                        ;
++------+-------+----------+-------------------------------------+
+
+
++---------------------------------+
+; Analysis & Elaboration Messages ;
++---------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Elaboration
+    Info: Version 20.1.0 Build 711 06/05/2020 SJ Lite Edition
+    Info: Processing started: Fri Sep 17 11:12:19 2021
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off computador -c computador --analysis_and_elaboration
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 2 design units, including 1 entities, in source file ulasomasub.vhd
+    Info (12022): Found design unit 1: ULASomaSub-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/ULASomaSub.vhd Line: 15
+    Info (12023): Found entity 1: ULASomaSub File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/ULASomaSub.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file somadorgenerico.vhd
+    Info (12022): Found design unit 1: somadorGenerico-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/somadorGenerico.vhd Line: 18
+    Info (12023): Found entity 1: somadorGenerico File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/somadorGenerico.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file somadaconstante.vhd
+    Info (12022): Found design unit 1: somaConstante-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/somadaConstante.vhd Line: 19
+    Info (12023): Found entity 1: somaConstante File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/somadaConstante.vhd Line: 6
+Info (12021): Found 2 design units, including 1 entities, in source file registradorgenerico.vhd
+    Info (12022): Found design unit 1: registradorGenerico-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/registradorGenerico.vhd Line: 15
+    Info (12023): Found entity 1: registradorGenerico File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/registradorGenerico.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file registradorflag.vhd
+    Info (12022): Found design unit 1: registradorFlag-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/registradorFlag.vhd Line: 15
+    Info (12023): Found entity 1: registradorFlag File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/registradorFlag.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file mux_jump.vhd
+    Info (12022): Found design unit 1: mux_jump-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/mux_jump.vhd Line: 14
+    Info (12023): Found entity 1: mux_jump File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/mux_jump.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file muxgenericojump.vhd
+    Info (12022): Found design unit 1: muxGenericoJUMP-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/muxGenericoJUMP.vhd Line: 14
+    Info (12023): Found entity 1: muxGenericoJUMP File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/muxGenericoJUMP.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file muxgenerico2x1.vhd
+    Info (12022): Found design unit 1: muxGenerico2x1-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/muxGenerico2x1.vhd Line: 14
+    Info (12023): Found entity 1: muxGenerico2x1 File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/muxGenerico2x1.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file memoriaram.vhdl
+    Info (12022): Found design unit 1: memoriaRAM-rtl File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/memoriaRAM.vhdl Line: 21
+    Info (12023): Found entity 1: memoriaRAM File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/memoriaRAM.vhdl Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file memoriarom.vhd
+    Info (12022): Found design unit 1: memoriaROM-assincrona File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/memoriaROM.vhd Line: 16
+    Info (12023): Found entity 1: memoriaROM File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/memoriaROM.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file logica_de_desvio.vhd
+    Info (12022): Found design unit 1: Logica_de_desvio-arch_name File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/logica_de_desvio.vhd Line: 25
+    Info (12023): Found entity 1: Logica_de_desvio File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/logica_de_desvio.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file end_retorno.vhd
+    Info (12022): Found design unit 1: end_retorno-comportamento File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/end_retorno.vhd Line: 15
+    Info (12023): Found entity 1: end_retorno File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/end_retorno.vhd Line: 4
+Info (12021): Found 3 design units, including 1 entities, in source file edgedetector.vhd
+    Info (12022): Found design unit 1: edgeDetector-bordaSubida File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/edgeDetector.vhd Line: 10
+    Info (12022): Found design unit 2: edgeDetector-bordaDescida File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/edgeDetector.vhd Line: 23
+    Info (12023): Found entity 1: edgeDetector File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/edgeDetector.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file decodificador3x8.vhd
+    Info (12022): Found design unit 1: decodificador3x8-arch_name File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/decodificador3x8.vhd Line: 25
+    Info (12023): Found entity 1: decodificador3x8 File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/decodificador3x8.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file decodificador.vhd
+    Info (12022): Found design unit 1: decodificador-arch_name File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/decodificador.vhd Line: 17
+    Info (12023): Found entity 1: decodificador File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/decodificador.vhd Line: 5
+Info (12021): Found 2 design units, including 1 entities, in source file cpu.vhd
+    Info (12022): Found design unit 1: cpu-arquitetura File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 25
+    Info (12023): Found entity 1: cpu File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 4
+Info (12021): Found 2 design units, including 1 entities, in source file computador.vhd
+    Info (12022): Found design unit 1: computador-arch_name File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 19
+    Info (12023): Found entity 1: computador File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 4
+Info (12127): Elaborating entity "computador" for the top level hierarchy
+Warning (10541): VHDL Signal Declaration warning at computador.vhd(14): used implicit default value for signal "LEDR" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 14
+Warning (10541): VHDL Signal Declaration warning at computador.vhd(21): used implicit default value for signal "habLeituraMEM" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 21
+Warning (10541): VHDL Signal Declaration warning at computador.vhd(26): used implicit default value for signal "CLK" because signal was never assigned a value or an explicit default value. Use of implicit default value may introduce unintended design optimizations. File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 26
+Info (12128): Elaborating entity "cpu" for hierarchy "cpu:CPU1" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 32
+Info (12128): Elaborating entity "muxGenerico2x1" for hierarchy "cpu:CPU1|muxGenerico2x1:MUX1" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 62
+Info (12128): Elaborating entity "muxGenericoJUMP" for hierarchy "cpu:CPU1|muxGenericoJUMP:MUXJUMP" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 68
+Info (12128): Elaborating entity "registradorGenerico" for hierarchy "cpu:CPU1|registradorGenerico:REG1" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 76
+Info (12128): Elaborating entity "registradorFlag" for hierarchy "cpu:CPU1|registradorFlag:FLAG" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 79
+Info (12128): Elaborating entity "end_retorno" for hierarchy "cpu:CPU1|end_retorno:END_RETORNO" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 82
+Info (12128): Elaborating entity "registradorGenerico" for hierarchy "cpu:CPU1|registradorGenerico:PC" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 86
+Info (12128): Elaborating entity "ULASomaSub" for hierarchy "cpu:CPU1|ULASomaSub:ULA1" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 91
+Info (12128): Elaborating entity "somaConstante" for hierarchy "cpu:CPU1|somaConstante:SOMACONSTANTE" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 97
+Info (12128): Elaborating entity "decodificador" for hierarchy "cpu:CPU1|decodificador:DECODER" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 100
+Info (12128): Elaborating entity "Logica_de_desvio" for hierarchy "cpu:CPU1|Logica_de_desvio:logica_de_desvio" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/cpu.vhd Line: 103
+Info (12128): Elaborating entity "memoriaROM" for hierarchy "memoriaROM:ROM1" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 44
+Info (12128): Elaborating entity "memoriaRAM" for hierarchy "memoriaRAM:RAM1" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 47
+Info (12128): Elaborating entity "decodificador3x8" for hierarchy "decodificador3x8:DECODIFICADO_BLOCO" File: C:/Users/thalials/OneDrive - Insper - Institudo de Ensino e Pesquisa/Documentos/Insper/6-semestre/design-de-computadores/design_de_computadores/a7/computador.vhd Line: 51
+Info: Quartus Prime Analysis & Elaboration was successful. 0 errors, 3 warnings
+    Info: Peak virtual memory: 4843 megabytes
+    Info: Processing ended: Fri Sep 17 11:12:30 2021
+    Info: Elapsed time: 00:00:11
+    Info: Total CPU time (on all processors): 00:00:26
+
+
