@@ -35,22 +35,22 @@ architecture assincrona of memoriaROM is
       -- CTRL = SelMUX, Habilita_A, Reset_A, Operacao_ULA
       -- Inicializa os endereços:
       --                 CTRL   Prox Estado
-	   tmp(0)  := LDI & '0' & x"04";
-      tmp(1)  := STA & '1' & x"01";   -- Desta posicao para baixo, é necessário acertar o CTRL
-      tmp(2)  := CEQ & '1' & x"01";
-      tmp(3)  := JEQ & '0' & x"0B";
-      tmp(4)  := SUB & '1' & x"01";
-      tmp(5)  := SOMA &'1' & x"01";
-      tmp(6)  := LDA &'1' & x"00";
-      tmp(7)  := LDI & '0' & x"20";
-      tmp(8)  := JSR & '0' & x"0C";
-      tmp(9)  := JMP & '0' & x"01";
-      tmp(10) := NOP & '0' & x"00";
-      tmp(11) := JMP & '0' & x"04";
-      tmp(12) := LDI & '0' & x"10";
-      tmp(13) := RET & '0' & x"00";
-      tmp(14) := NOP & '0' & x"00";
-      tmp(15) := NOP & '0' & x"00";
+	   tmp(0)  := LDI  & '0' & x"01";
+      tmp(1)  := STA  & '0' & x"00";   -- Desta posicao para baixo, é necessário acertar o CTRL
+      tmp(2)  := SOMA & '0' & x"00";
+      tmp(3)  := STA  & '0' & x"01";
+      tmp(4)  := LDA  & '0' & x"00";
+      tmp(5)  := STA  & '1' & x"01";
+      tmp(6)  := STA  & '1' & x"02";
+      tmp(7)  := LDI  & '0' & x"55";
+      tmp(8)  := STA  & '1' & x"00";
+      tmp(9)  := LDI  & '0' & x"AA";
+      tmp(10) := STA  & '1' & x"00";
+      tmp(11) := JMP  & '0' & x"0B";
+      tmp(12) := NOP  & '0' & x"00";
+      tmp(13) := NOP  & '0' & x"00";
+      tmp(14) := NOP  & '0' & x"00";
+      tmp(15) := NOP  & '0' & x"00";
 	  return tmp;
     end initMemory;
 

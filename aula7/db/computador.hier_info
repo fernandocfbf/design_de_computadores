@@ -1,17 +1,32 @@
 |computador
-CLOCK_50 => ~NO_FANOUT~
+CLOCK_50 => cpu:CPU1.CLK
+CLOCK_50 => memoriaram:RAM1.clk
+CLOCK_50 => registradorgenerico:REGISTRADOR_LED.CLK
+CLOCK_50 => registradorflag:REGISTRADOR_LED8.CLK
+CLOCK_50 => registradorflag:REGISTRADOR_LED9.CLK
 KEY[0] => ~NO_FANOUT~
 KEY[1] => ~NO_FANOUT~
 KEY[2] => ~NO_FANOUT~
 KEY[3] => ~NO_FANOUT~
-LEDR[0] <= comb.DB_MAX_OUTPUT_PORT_TYPE
-LEDR[1] <= LEDR[1].DB_MAX_OUTPUT_PORT_TYPE
-LEDR[2] <= LEDR[2].DB_MAX_OUTPUT_PORT_TYPE
-LEDR[3] <= LEDR[3].DB_MAX_OUTPUT_PORT_TYPE
-LEDR[4] <= LEDR[4].DB_MAX_OUTPUT_PORT_TYPE
-LEDR[5] <= LEDR[5].DB_MAX_OUTPUT_PORT_TYPE
-LEDR[6] <= LEDR[6].DB_MAX_OUTPUT_PORT_TYPE
-LEDR[7] <= LEDR[7].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[0] <= registradorgenerico:REGISTRADOR_LED.DOUT[0]
+LEDR[1] <= registradorgenerico:REGISTRADOR_LED.DOUT[1]
+LEDR[2] <= registradorgenerico:REGISTRADOR_LED.DOUT[2]
+LEDR[3] <= registradorgenerico:REGISTRADOR_LED.DOUT[3]
+LEDR[4] <= registradorgenerico:REGISTRADOR_LED.DOUT[4]
+LEDR[5] <= registradorgenerico:REGISTRADOR_LED.DOUT[5]
+LEDR[6] <= registradorgenerico:REGISTRADOR_LED.DOUT[6]
+LEDR[7] <= registradorgenerico:REGISTRADOR_LED.DOUT[7]
+LEDR[8] <= registradorflag:REGISTRADOR_LED8.DOUT
+LEDR[9] <= registradorflag:REGISTRADOR_LED9.DOUT
+PC_out[0] <= cpu:CPU1.ROM_address[0]
+PC_out[1] <= cpu:CPU1.ROM_address[1]
+PC_out[2] <= cpu:CPU1.ROM_address[2]
+PC_out[3] <= cpu:CPU1.ROM_address[3]
+PC_out[4] <= cpu:CPU1.ROM_address[4]
+PC_out[5] <= cpu:CPU1.ROM_address[5]
+PC_out[6] <= cpu:CPU1.ROM_address[6]
+PC_out[7] <= cpu:CPU1.ROM_address[7]
+PC_out[8] <= cpu:CPU1.ROM_address[8]
 
 
 |computador|cpu:CPU1
@@ -595,5 +610,120 @@ s4 <= Equal4.DB_MAX_OUTPUT_PORT_TYPE
 s5 <= Equal5.DB_MAX_OUTPUT_PORT_TYPE
 s6 <= Equal6.DB_MAX_OUTPUT_PORT_TYPE
 s7 <= Equal7.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|computador|decodificador3x8:DECODIFICADOR_LED
+entrada[0] => Equal0.IN2
+entrada[0] => Equal1.IN2
+entrada[0] => Equal2.IN1
+entrada[0] => Equal3.IN2
+entrada[0] => Equal4.IN1
+entrada[0] => Equal5.IN2
+entrada[0] => Equal6.IN0
+entrada[0] => Equal7.IN2
+entrada[1] => Equal0.IN1
+entrada[1] => Equal1.IN1
+entrada[1] => Equal2.IN2
+entrada[1] => Equal3.IN1
+entrada[1] => Equal4.IN0
+entrada[1] => Equal5.IN0
+entrada[1] => Equal6.IN2
+entrada[1] => Equal7.IN1
+entrada[2] => Equal0.IN0
+entrada[2] => Equal1.IN0
+entrada[2] => Equal2.IN0
+entrada[2] => Equal3.IN0
+entrada[2] => Equal4.IN2
+entrada[2] => Equal5.IN1
+entrada[2] => Equal6.IN1
+entrada[2] => Equal7.IN0
+s0 <= Equal0.DB_MAX_OUTPUT_PORT_TYPE
+s1 <= Equal1.DB_MAX_OUTPUT_PORT_TYPE
+s2 <= Equal2.DB_MAX_OUTPUT_PORT_TYPE
+s3 <= Equal3.DB_MAX_OUTPUT_PORT_TYPE
+s4 <= Equal4.DB_MAX_OUTPUT_PORT_TYPE
+s5 <= Equal5.DB_MAX_OUTPUT_PORT_TYPE
+s6 <= Equal6.DB_MAX_OUTPUT_PORT_TYPE
+s7 <= Equal7.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|computador|registradorGenerico:REGISTRADOR_LED
+DIN[0] => DOUT[0]~reg0.DATAIN
+DIN[1] => DOUT[1]~reg0.DATAIN
+DIN[2] => DOUT[2]~reg0.DATAIN
+DIN[3] => DOUT[3]~reg0.DATAIN
+DIN[4] => DOUT[4]~reg0.DATAIN
+DIN[5] => DOUT[5]~reg0.DATAIN
+DIN[6] => DOUT[6]~reg0.DATAIN
+DIN[7] => DOUT[7]~reg0.DATAIN
+DOUT[0] <= DOUT[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[1] <= DOUT[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[2] <= DOUT[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[3] <= DOUT[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[4] <= DOUT[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[5] <= DOUT[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[6] <= DOUT[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+DOUT[7] <= DOUT[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+ENABLE => DOUT[7]~reg0.ENA
+ENABLE => DOUT[6]~reg0.ENA
+ENABLE => DOUT[5]~reg0.ENA
+ENABLE => DOUT[4]~reg0.ENA
+ENABLE => DOUT[3]~reg0.ENA
+ENABLE => DOUT[2]~reg0.ENA
+ENABLE => DOUT[1]~reg0.ENA
+ENABLE => DOUT[0]~reg0.ENA
+CLK => DOUT[0]~reg0.CLK
+CLK => DOUT[1]~reg0.CLK
+CLK => DOUT[2]~reg0.CLK
+CLK => DOUT[3]~reg0.CLK
+CLK => DOUT[4]~reg0.CLK
+CLK => DOUT[5]~reg0.CLK
+CLK => DOUT[6]~reg0.CLK
+CLK => DOUT[7]~reg0.CLK
+RST => DOUT[0]~reg0.ACLR
+RST => DOUT[1]~reg0.ACLR
+RST => DOUT[2]~reg0.ACLR
+RST => DOUT[3]~reg0.ACLR
+RST => DOUT[4]~reg0.ACLR
+RST => DOUT[5]~reg0.ACLR
+RST => DOUT[6]~reg0.ACLR
+RST => DOUT[7]~reg0.ACLR
+
+
+|computador|registradorFlag:REGISTRADOR_LED8
+DIN => DOUT~reg0.DATAIN
+DOUT <= DOUT~reg0.DB_MAX_OUTPUT_PORT_TYPE
+ENABLE => DOUT~reg0.ENA
+CLK => DOUT~reg0.CLK
+RST => DOUT~reg0.ACLR
+
+
+|computador|registradorFlag:REGISTRADOR_LED9
+DIN => DOUT~reg0.DATAIN
+DOUT <= DOUT~reg0.DB_MAX_OUTPUT_PORT_TYPE
+ENABLE => DOUT~reg0.ENA
+CLK => DOUT~reg0.CLK
+RST => DOUT~reg0.ACLR
+
+
+|computador|porta_and:AND1
+entrada1 => dataOUT.IN0
+entrada2 => dataOUT.IN1
+entrada3 => dataOUT.IN1
+dataOUT <= dataOUT.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|computador|porta_and:AND2
+entrada1 => dataOUT.IN0
+entrada2 => dataOUT.IN1
+entrada3 => dataOUT.IN1
+dataOUT <= dataOUT.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|computador|porta_and:AND3
+entrada1 => dataOUT.IN0
+entrada2 => dataOUT.IN1
+entrada3 => dataOUT.IN1
+dataOUT <= dataOUT.DB_MAX_OUTPUT_PORT_TYPE
 
 
