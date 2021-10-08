@@ -1,0 +1,41 @@
+Quartus Prime Archive log --	C:/aula8/aula8_teste_restored/aula8-entrega.qarlog
+
+Archive:	C:/aula8/aula8_teste_restored/aula8-entrega.qar
+Date:		Wed Sep 29 17:38:55 2021
+Quartus Prime		20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/aula8/aula8_teste_restored/State3.vhd
+C:/aula8/aula8_teste_restored/State3_8.vhd
+C:/aula8/aula8_teste_restored/ULASomaSub.vhd
+C:/aula8/aula8_teste_restored/Waveform.vwf
+C:/aula8/aula8_teste_restored/Waveform1.vwf
+C:/aula8/aula8_teste_restored/aula8.qpf
+C:/aula8/aula8_teste_restored/aula8.qsf
+C:/aula8/aula8_teste_restored/aula8.vhd
+C:/aula8/aula8_teste_restored/cpu.vhd
+C:/aula8/aula8_teste_restored/decodificador.vhd
+C:/aula8/aula8_teste_restored/decodificador2.vhd
+C:/aula8/aula8_teste_restored/decodificador3x8.vhd
+C:/aula8/aula8_teste_restored/decodificadorSegmentos.vhd
+C:/aula8/aula8_teste_restored/edgeDetector.vhd
+C:/aula8/aula8_teste_restored/end_retorno.vhd
+C:/aula8/aula8_teste_restored/logica_de_desvio.vhd
+C:/aula8/aula8_teste_restored/memoriaRAM.vhd
+C:/aula8/aula8_teste_restored/memoriaROM.vhd
+C:/aula8/aula8_teste_restored/muxGenerico2x1.vhd
+C:/aula8/aula8_teste_restored/muxGenericoJUMP.vhd
+C:/aula8/aula8_teste_restored/mux_jump.vhd
+C:/aula8/aula8_teste_restored/porta_and.vhd
+C:/aula8/aula8_teste_restored/registrador4.vhd
+C:/aula8/aula8_teste_restored/registradorFlag.vhd
+C:/aula8/aula8_teste_restored/registradorGenerico.vhd
+C:/aula8/aula8_teste_restored/registradorGenerico_entrada1.vhd
+C:/aula8/aula8_teste_restored/registrador_key0.vhd
+C:/aula8/aula8_teste_restored/somadaConstante.vhd
+C:/aula8/aula8_teste_restored/somadorGenerico.vhd
+c:/intelfpga_lite/20.1/quartus/bin64/assignment_defaults.qdf
+	======= Total: 30 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
