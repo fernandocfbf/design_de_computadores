@@ -1,0 +1,342 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity memoriaROM is
+   generic (
+          dataWidth: natural := 13;
+          addrWidth: natural := 9
+    );
+   port (
+          Endereco : in std_logic_vector (addrWidth-1 DOWNTO 0);
+          Dado : out std_logic_vector (dataWidth-1 DOWNTO 0)
+    );
+end entity;
+
+architecture assincrona of memoriaROM is
+
+  constant NOP  : std_logic_vector(3 downto 0) := "0000" ;
+  constant LDA  : std_logic_vector(3 downto 0) := "0001" ; -- carrega ac com valor da memoria
+  constant SOMA : std_logic_vector(3 downto 0) := "0010" ; -- soma A+B
+  constant SUB  : std_logic_vector(3 downto 0) := "0011" ; -- subtrai A-B
+  constant LDI  : std_logic_vector(3 downto 0) := "0100" ; -- carrega acumulador 
+  constant STA  : std_logic_vector(3 downto 0) := "0101" ; -- salva valor do ac na memória
+  constant JMP  : std_logic_vector(3 downto 0) := "0110" ; -- faz um jump
+  constant JEQ  : std_logic_vector(3 downto 0) := "0111" ; -- desvia se CEQ = 0
+  constant CEQ  : std_logic_vector(3 downto 0) := "1000" ; -- compara ac com o valor da memória
+  constant JSR  : std_logic_vector(3 downto 0) := "1001" ;
+  constant RET  : std_logic_vector(3 downto 0) := "1010" ; --retorna da subrotina
+  
+  type blocoMemoria is array(0 TO 2**addrWidth - 1) of std_logic_vector(dataWidth-1 DOWNTO 0);
+
+  function initMemory
+        return blocoMemoria is variable tmp : blocoMemoria := (others => (others => '0'));
+  begin
+      -- CTRL = SelMUX, Habilita_A, Reset_A, Operacao_ULA
+      -- Inicializa os endereços:
+      --    		CTRL   Prox Estado
+		 
+		 
+		 -- 1. SETUP
+		 
+		 
+		 tmp(0)  := LDI  & '0' & x"00"; -- Carrega 0 no AC
+		 
+		 -- 1.1 carrega 0 nos HEXs
+			 tmp(1)  := STA  & '1' & x"20"; 
+			 tmp(2)  := STA  & '1' & x"21";
+			 tmp(3)  := STA  & '1' & x"22";
+			 tmp(4)  := STA  & '1' & x"23";
+			 tmp(5)  := STA  & '1' & x"24";
+			 tmp(6)  := STA  & '1' & x"25";
+			 
+		 -- 1.2 carrega 0 nos LEDs
+			 tmp(7)  := STA  & '1' & x"00"; -- (LEDR 7)
+			 tmp(8)  := STA  & '1' & x"01"; -- limite (LEDR 8)
+			 tmp(9)  := STA  & '1' & x"02"; -- overflow (LEDR 9)
+		
+		 -- 1.3 carrega 0 nas variáveis
+			 tmp(10)  := STA  & '0' & x"00"; -- comparação com 0
+			 tmp(11)  := STA  & '0' & x"01"; -- unidade
+			 tmp(12)  := STA  & '0' & x"02"; -- dezena
+			 tmp(13)  := STA  & '0' & x"03"; -- centena
+			 tmp(14)  := STA  & '0' & x"04"; -- milhar
+			 tmp(15)  := STA  & '0' & x"05"; -- dezena de milhar
+			 tmp(16)  := STA  & '0' & x"06"; -- centena de milhar
+			 tmp(17)  := STA  & '0' & x"07"; -- inibir contagem
+		 
+		 -- 1.4 limites de contagem e constantes
+			 tmp(18)  := LDI  & '0' & x"01";
+			 tmp(19)  := STA  & '0' & x"08"; -- const 1
+			 
+			 tmp(20)  := LDI  & '0' & x"0A";
+			 tmp(21)  := STA  & '0' & x"09"; -- comparação com 10
+			 
+			 tmp(22)  := LDI  & '0' & x"09";
+			 tmp(23)  := STA  & '0' & x"0A"; -- limite unidade (9)
+			 tmp(24)  := STA  & '0' & x"0B"; -- limite dezena (9)
+			 tmp(25)  := STA  & '0' & x"0C"; -- limite centena (9)
+			 tmp(26)  := STA  & '0' & x"0D"; -- limite milhar (9)
+			 tmp(27)  := STA  & '0' & x"0E"; -- limite dezena de milhar (9)
+			 tmp(28)  := STA  & '0' & x"0F"; -- limite centena de milhar (9)
+			 
+			 tmp(29)  := JMP  & '0' & x"1E"; -- pula para loop
+			 
+		 -- 2. LOOP 
+		 
+		 -- 2.1 lê flag_inibir
+			 tmp(30)  := NOP & '0' & x"00";
+			 tmp(31)  := LDA & '0' & x"07"; -- lê flag de inibir
+			 tmp(32)  := CEQ & '0' & x"08"; -- compara com const 1
+			 tmp(33)  := JEQ & '0' & x"26"; -- desvia (flag inibir)
+			 
+		 -- 2.1 lê KEY[0] 
+			 tmp(34)  := LDA & '1' & x"60"; -- carrega AC com valor KEY[0]
+			 tmp(35)  := CEQ & '0' & x"00"; -- compara com MEM[0] (const 0)
+			 tmp(36)  := JEQ & '0' & x"26"; -- desvia se igual a 0 (botão não pressionado)
+			 tmp(37)  := JSR & '0' & x"31"; -- pula para sub rotina de incremento
+			 
+		 -- 2.2 lê KEY[1]
+		    tmp(38)  := LDA & '1' & x"61"; -- carrega AC com valor KEY[1]
+			 tmp(39)  := CEQ & '0' & x"00"; -- compara com MEM[0] (const 0)
+			 tmp(40)  := JEQ & '0' & x"83"; -- desvia para verificar limites (botão não pressionado)
+			 tmp(41)  := JSR & '0' & x"9F"; -- sub rotina de config de limites
+			 tmp(42)  := NOP & '0' & x"00";
+			 
+			 tmp(43)  := JSR & '0' & x"83"; -- sub rotina (verificar limites)
+		
+		 -- 2.3 lê FPGA_RESET
+			 tmp(44)  := LDA & '1' & x"64"; -- carrega o AC com FPGA_RESET
+			 tmp(45)  := CEQ & '0' & x"08"; -- compara com const 1
+			 tmp(46)  := JEQ & '0' & x"2F"; -- desvia para sub rotina update
+			 tmp(47)  := JSR & '0' & x"78"; -- sub rotina de reset
+
+			 tmp(48)  := JSR & '0' & x"6B"; -- sub rotina de update
+
+			 tmp(49)  := JMP & '0' & x"1E"; -- reinicia
+			 
+		 -- 2.4 sub rotina de incremento (ARRUMAR)
+		 
+		 -- 2.4.1 incrementa unidade
+			 tmp(50)    := STA  & '1' & x"FF"; -- limpa KEY[0]
+			 tmp(51) 	:= LDA  & '0' & x"01"; -- carrega unidade
+			 tmp(52) 	:= SOMA & '0' & x"08"; -- soma com const 1
+			 tmp(53) 	:= STA  & '0' & x"01"; -- salva o incremento em unidade
+			 tmp(54) 	:= CEQ  & '0' & x"09"; -- compara com const 10
+			 tmp(55) 	:= JEQ  & '0' & x"38"; -- desvia se chegou em 10 
+			 tmp(56) 	:= JMP  & '0' & x"6A"; -- retorna sub rotina
+			 
+		 -- 2.4.2 incrementa dezena
+			 tmp(57)    := LDA  & '0' & x"00"; -- carrega const 0
+			 tmp(58) 	:= STA  & '0' & x"01"; -- guarda o valor nas unidades
+			 tmp(59) 	:= LDA  & '0' & x"02"; -- carrega dezenas
+			 tmp(60) 	:= SOMA & '0' & x"08"; -- soma com const 1
+			 tmp(61) 	:= STA  & '0' & x"02"; -- guarda o valor nas dezenas
+			 tmp(62)    := CEQ  & '0' & x"09"; -- compara com o valor const 10
+			 tmp(63)    := JEQ  & '0' & x"40"; -- desvia se chegou em 10
+			 tmp(64)    := JMP  & '0' & x"6A"; -- retorna sub rotina
+			 
+		 -- 2.4.3 incrementa centena
+			 tmp(65)    := LDA  & '0' & x"00"; -- carrega const 0
+			 tmp(66) 	:= STA  & '0' & x"02"; -- guarda o valor nas dezenas
+			 tmp(67) 	:= LDA  & '0' & x"03"; -- carrega centenas
+			 tmp(68) 	:= SOMA & '0' & x"08"; -- soma com const 1
+			 tmp(69) 	:= STA  & '0' & x"03"; -- guarda o valor nas centenas
+			 tmp(70)    := CEQ  & '0' & x"09"; -- compara com const 10
+			 tmp(71)    := JEQ  & '0' & x"48"; -- desvia se chegou em 10
+			 tmp(72)    := JMP  & '0' & x"6A";
+			 
+		 -- 2.4.4 incrementa milhar
+			 tmp(73)    := LDA  & '0' & x"00"; -- carrega const 0
+			 tmp(74) 	:= STA  & '0' & x"03"; -- guarda o valor nas centenas
+			 tmp(75) 	:= LDA  & '0' & x"04"; -- carrega milhares
+			 tmp(76) 	:= SOMA & '0' & x"08"; -- soma com const 1
+			 tmp(77) 	:= STA  & '0' & x"04"; -- guarda o valor nos milhares
+			 tmp(78)    := CEQ  & '0' & x"09"; -- compara com const 10
+			 tmp(79)    := JEQ  & '0' & x"50"; -- desvia se chegou em 10
+			 tmp(80)    := JMP  & '0' & x"6A";
+			 
+		 -- 2.4.5 incrementa dezena de milhar
+			 tmp(81)    := LDA  & '0' & x"00"; -- carrega const 0
+			 tmp(82) 	:= STA  & '0' & x"04"; -- guarda o valor nos milhares
+			 tmp(83) 	:= LDA  & '0' & x"05"; -- carrega dezenas de milhares
+			 tmp(84) 	:= SOMA & '0' & x"08"; -- soma com const 1
+			 tmp(85) 	:= STA  & '0' & x"05"; -- guarda o valor nas dezenas de milhares
+			 tmp(86)    := CEQ  & '0' & x"09"; -- compara com const 10
+			 tmp(87)    := JEQ  & '0' & x"58"; -- desvia se chegou em 10
+			 tmp(88)    := JMP  & '0' & x"6A";
+			 
+		 -- 2.4.6 incrementa centena de milhar 
+			 tmp(89)    := LDA  & '0' & x"00"; -- carrega const 0
+			 tmp(90)    := STA  & '0' & x"05"; -- guarda o valor nas dezenas de milhares
+			 tmp(91)    := LDA  & '0' & x"06"; -- carrega centenas de milhares
+			 tmp(92)    := SOMA & '0' & x"08"; -- soma com const 1
+			 tmp(93)    := STA  & '0' & x"06"; -- guarda o valor nas centenas de milhares
+			 tmp(94)    := CEQ  & '0' & x"09"; -- compara com const 10
+			 tmp(95)    := JEQ  & '0' & x"60"; -- desvia se chegou em 10
+			 tmp(96)    := JMP  & '0' & x"6A";
+			 
+		 -- 2.4.7 inibir contagem
+			 tmp(97)  := LDA & '0' & x"08"; -- carrega const 1
+			 tmp(98)  := STA & '0' & x"07"; -- carrega flag inibir
+			 tmp(99)  := STA & '1' & x"02"; -- guarda no LED9 
+			 tmp(100) := LDI & '0' & x"09"; -- carrega 9 imediato
+			 tmp(101) := STA & '0' & x"01"; -- unidade
+			 tmp(102) := STA & '0' & x"02"; -- dezena
+			 tmp(103) := STA & '0' & x"03"; -- centena
+			 tmp(104) := STA & '0' & x"04"; -- milhar
+			 tmp(105) := STA & '0' & x"05"; -- dezena de milhar
+			 tmp(106) := STA & '0' & x"06"; -- centena de milhar
+		
+			 tmp(107) := RET & '0' & x"00"; -- retorna da sub-rotina
+			 
+		 -- 2.5 UPDATE
+			 tmp(108) := LDA & '0' & x"01"; -- carrega unidade
+			 tmp(109) := STA & '1' & x"20"; -- guarda o valor no HEX0 (288)
+			 tmp(110) := LDA & '0' & x"02"; -- carrega dezenas
+			 tmp(111) := STA & '1' & x"21"; -- guarda o valor no HEX1 (289)
+			 tmp(112) := LDA & '0' & x"03"; -- carrega centenas
+			 tmp(113) := STA & '1' & x"22"; -- guarda o valor no HEX2 (290)
+			 tmp(114) := LDA & '0' & x"04"; -- carrega milhares
+			 tmp(115) := STA & '1' & x"23"; -- guarda o valor no HEX3 (291)
+			 tmp(116) := LDA & '0' & x"05"; -- carrega dezena de milhares
+			 tmp(117) := STA & '1' & x"24"; -- guarda o valor no HEX3 (292)
+			 tmp(118) := LDA & '0' & x"06"; -- carrega centena de milhares
+			 tmp(119) := STA & '1' & x"25"; -- guarda o valor no HEX3 (293)
+
+			 tmp(120)	:= RET & '0' & x"00"; -- Retorna da sub-rotina
+		 
+		 -- 2.6 RESET
+		    tmp(121)	:= LDA & '0' & x"00"; -- carrega const 0
+			 tmp(122)	:= STA & '0' & x"01"; -- reset unidade
+			 tmp(123)	:= STA & '0' & x"02"; -- reset dezena
+			 tmp(124)	:= STA & '0' & x"03"; -- reset centena
+			 tmp(125)	:= STA & '0' & x"04"; -- reset milhar
+			 tmp(126)	:= STA & '0' & x"05"; -- reset dezena de milhar
+			 tmp(127)	:= STA & '0' & x"06"; -- reset centena de milhar 
+			 tmp(128)	:= STA & '0' & x"07"; -- reset flag de inibir
+			 tmp(129)	:= STA & '1' & x"01"; -- reset LED8
+			 tmp(130)	:= STA & '1' & x"02"; -- reset LED9
+			 tmp(131)	:= RET & '0' & x"00"; -- retorna da sub rotina
+		     
+			 
+		 -- 2.7 verifica limites
+		 
+			 -- 2.7.1 checa unidade
+			 tmp(132)  := LDA & '0' & x"0A"; -- carrega limite unidade
+			 tmp(133)  := CEQ & '0' & x"01"; -- compara com o valor unidade
+			 tmp(134)  := JEQ & '0' & x"87"; -- desvia (chegou no limite)
+			 
+			 tmp(135)  := JMP & '0' & x"9E"; -- retorna da sub-rotina
+			 
+			 -- 2.7.2 checa dezena
+			 tmp(136)  := LDA & '0' & x"0B"; -- carrega limite dezena
+			 tmp(137)  := CEQ & '0' & x"02"; -- compara com o valor dezena
+			 tmp(138)  := JEQ & '0' & x"8B"; -- desvia (chegou no limite)
+			 
+			 tmp(139)  := JMP & '0' & x"9E"; -- retorna da sub-rotina
+			 
+			 -- 2.7.3 checa centena
+			 tmp(140)  := LDA & '0' & x"0C"; -- carrega limite centena
+			 tmp(141)  := CEQ & '0' & x"03"; -- compara com o valor centena
+			 tmp(142)  := JEQ & '0' & x"8F"; -- desvia (chegou no limite)
+			 
+			 tmp(143)  := JMP & '0' & x"9E"; -- retorna da sub-rotina
+			 
+			 -- 2.7.4 checa milhar
+			 tmp(144)  := LDA & '0' & x"0D"; -- carrega limite milhar
+			 tmp(145)  := CEQ & '0' & x"04"; -- compara com o valor milhar
+			 tmp(146)  := JEQ & '0' & x"93"; -- desvia (chegou no limite)
+			 
+			 tmp(147)  := JMP & '0' & x"9E"; -- retorna da sub-rotina
+			 
+			 -- 2.7.5 checa dezena de milhar 
+			 tmp(148)  := LDA & '0' & x"0E"; -- carrega limite dezena de milhar
+			 tmp(149)  := CEQ & '0' & x"05"; -- compara com o valor dezena de milhar
+			 tmp(150)  := JEQ & '0' & x"97"; -- desvia (chegou no limite)
+			 
+			 tmp(151)  := JMP & '0' & x"9E"; -- retorna da sub-rotina
+			 
+			 -- 2.7.6 checa centena de milhar 
+			 tmp(152)  := LDA & '0' & x"0F"; -- carrega limite centena de milhar
+			 tmp(153)  := CEQ & '0' & x"06"; -- compara com o valor centena de milhar
+			 tmp(154)  := JEQ & '0' & x"9B"; -- desvia (chegou no limite)
+			 
+			 tmp(155)  := JMP & '0' & x"9E"; -- retorna da sub-rotina
+			 
+			 -- 2.7.7 ativa flag limite atingido
+			 tmp(156)	:= LDA & '0' & x"08"; -- carrega const 1
+			 tmp(157)	:= STA & '0' & x"07"; -- guarda o valor no MEM[7] (ativa flag)
+			 tmp(158)	:= STA & '1' & x"01"; -- ativa o LED8 (limite atingido)
+			 
+			 tmp(159)	:= RET & '0' & x"00"; -- sai da sub-rotina
+		 
+		 -- 2.8 configura limites
+		    tmp(160)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+			 tmp(161)   := LDA & '0' & x"08"; -- carrega o valor const 1
+			 tmp(162)	:= STA & '1' & x"00"; -- guarda o valor do AC no LED7
+			 tmp(163)   := LDA & '1' & x"61"; -- guarda o AC com a leitura do botão KEY1
+			 tmp(164)   := CEQ & '0' & x"00"; -- compara com o valor const 0
+			 tmp(165)	:= LDA & '1' & x"40"; -- carrega o valor do SW07
+			 tmp(166)   := JEQ & '0' & x"A0"; -- desvia se igual a 0
+			 tmp(167)	:= STA & '0' & x"0A"; -- salva o valor em limite unidade
+			
+			 tmp(168)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+			 tmp(169)   := LDI & '0' & x"02"; -- carrega valor imediato 2
+			 tmp(170)	:= STA & '1' & x"00"; -- guarda o valor do AC em LED7
+			 tmp(171)   := LDA & '1' & x"61"; -- carrega o AC com a leitura do botão KEY1
+			 tmp(172)   := CEQ & '0' & x"00"; -- compara com o valor const 0
+			 tmp(173)	:= LDA & '1' & x"40"; -- carrega o valor de SW07
+			 tmp(174)   := JEQ & '0' & x"A8"; -- desvia se igual a 0
+			 tmp(175)	:= STA & '0' & x"0B"; -- salva o valor em limite dezena
+		 	
+	 		 tmp(176)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+ 			 tmp(177)   := LDI & '0' & x"04"; -- Carrega o valor imediato 4
+			 tmp(178)	:= STA & '1' & x"00"; -- guarda o valor do AC em LED7
+			 tmp(179)   := LDA & '1' & x"61"; -- carrega o AC com a leitura do botão KEY1
+			 tmp(180)   := CEQ & '0' & x"00"; -- compara com o valor const 0
+			 tmp(181)	:= LDA & '1' & x"40"; -- carrega o valor de SW07
+			 tmp(182)   := JEQ & '0' & x"B0"; -- desvia se igual a 0
+			 tmp(183)	:= STA & '0' & x"0C"; -- salva o valor em limite centena
+			
+			 tmp(184)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+			 tmp(185)   := LDI & '0' & x"08"; -- Carrega o valor imediato 8
+			 tmp(186)	:= STA & '1' & x"00"; -- guarda o valor do AC em LED7
+			 tmp(187)   := LDA & '1' & x"61"; -- carrega o AC com a leitura do botão KEY1
+			 tmp(188)   := CEQ & '0' & x"00"; -- compara com o valor const 0
+			 tmp(189)	:= LDA & '1' & x"40"; -- carrega o valor de SW07
+			 tmp(190)   := JEQ & '0' & x"B8"; -- desvia se igual a 0
+			 tmp(191)	:= STA & '0' & x"0D"; -- salva o valor em limite milhar 
+			
+			 tmp(192)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+			 tmp(193)   := LDI & '0' & x"10"; -- Carrega o valor imediato 16
+			 tmp(194)	:= STA & '1' & x"00"; -- guarda o valor do AC em LED7
+			 tmp(195)   := LDA & '1' & x"61"; -- carrega o AC com a leitura do botão KEY1
+			 tmp(196)   := CEQ & '0' & x"00"; -- compara com o valor const 0
+			 tmp(197)	:= LDA & '1' & x"40"; -- carrega o valor de SW07
+			 tmp(198)   := JEQ & '0' & x"C0"; -- desvia se igual a 0
+			 tmp(199)	:= STA & '0' & x"0E"; -- salva o valor em limite dezena de milhar
+			
+			 tmp(200)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+			 tmp(201)   := LDI & '0' & x"20"; -- Carrega o valor imediato 32
+			 tmp(202)	:= STA & '1' & x"00"; -- guarda o valor do AC em LED7
+			 tmp(203)   := LDA & '1' & x"61"; -- carrega o AC com a leitura do botão KEY1
+			 tmp(204)   := CEQ & '0' & x"00"; -- compara com o valor const 0
+			 tmp(205)	:= LDA & '1' & x"40"; -- carrega o valor de SW07
+			 tmp(206)   := JEQ & '0' & x"C8"; -- desvia se igual a 0
+			 tmp(207)	:= STA & '0' & x"0F"; -- salva o valor em limite centena de milhar
+			
+			 tmp(208)	:= STA & '1' & x"FE"; -- limpa a leitura do botão B1
+			 tmp(209)   := LDA & '0' & x"00"; -- Carrega o valor de MEM[3] (constante 0)
+			 tmp(210)	:= STA & '1' & x"00"; -- Armazena o valor do acumulador em MEM[256] (LED7)
+			 tmp(211)	:= RET & '0' & x"00"; -- Retorna da sub-rotina
+		 
+			 
+	  return tmp;
+    end initMemory;
+
+    signal memROM : blocoMemoria := initMemory;
+
+begin
+    Dado <= memROM (to_integer(unsigned(Endereco)));
+end architecture;
