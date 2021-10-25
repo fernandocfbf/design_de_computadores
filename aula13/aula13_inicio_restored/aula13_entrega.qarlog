@@ -1,0 +1,21 @@
+Quartus Prime Archive log --	C:/design_de_computadores/aula13/aula13_inicio_restored/aula13_entrega.qarlog
+
+Archive:	C:/design_de_computadores/aula13/aula13_inicio_restored/aula13_entrega.qar
+Date:		Thu Oct 21 22:01:07 2021
+Quartus Prime		20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/design_de_computadores/aula13/aula13_inicio_restored/ROMMIPS.vhd
+C:/design_de_computadores/aula13/aula13_inicio_restored/ULASomaSub.vhd
+C:/design_de_computadores/aula13/aula13_inicio_restored/assignment_defaults.qdf
+C:/design_de_computadores/aula13/aula13_inicio_restored/aula13.qpf
+C:/design_de_computadores/aula13/aula13_inicio_restored/aula13.qsf
+C:/design_de_computadores/aula13/aula13_inicio_restored/aula13.vhd
+C:/design_de_computadores/aula13/aula13_inicio_restored/bancoReg.vhd
+C:/design_de_computadores/aula13/aula13_inicio_restored/registradorGenerico.vhd
+C:/design_de_computadores/aula13/aula13_inicio_restored/somadaConstante.vhd
+C:/design_de_computadores/aula13/aula13_inicio_restored/somadorGenerico.vhd
+	======= Total: 10 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
