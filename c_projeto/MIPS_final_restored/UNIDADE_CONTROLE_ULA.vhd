@@ -23,6 +23,7 @@ ARCHITECTURE comportamento OF UNIDADE_CONTROLE_ULA IS
   CONSTANT ori : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001101";
   CONSTANT addi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001000";
   CONSTANT andi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001100";
+  CONSTANT slti : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001010";
 
   CONSTANT r : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000000";
 
@@ -51,6 +52,7 @@ BEGIN
     "0110" WHEN (tipo_r = '0' AND (opcode = beq or opcode = bne)) ELSE -- beq/bne 
     "0010" WHEN (tipo_r = '0' AND opcode = addi) ELSE -- addi 
     "0000" WHEN (tipo_r = '0' AND opcode = andi) ELSE -- andi 
+    "0111" WHEN (tipo_r = '0' AND opcode = slti) ELSE -- andi 
     "0000";
   -- J tipo J -> não precisa da ULA
 END ARCHITECTURE;

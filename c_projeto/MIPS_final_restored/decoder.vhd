@@ -18,6 +18,7 @@ ARCHITECTURE comportamento OF decoder IS
   CONSTANT addi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001000";
   CONSTANT andi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001100";
   CONSTANT bnes : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000101";
+  CONSTANT slti : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001010";
 
   --tipo j
   CONSTANT r : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000000";
@@ -39,6 +40,8 @@ ARCHITECTURE comportamento OF decoder IS
   ALIAS mux_jmp : STD_LOGIC IS saida(12);
   ALIAS mux_jr : STD_LOGIC IS saida(13);
 
+  -- verificar se andi e slti precisam escrever no reg
+
 BEGIN
   hab_escrita_mem <= '1' WHEN (entrada = sw) ELSE
     '0';
@@ -48,15 +51,15 @@ BEGIN
     '0';
   bne <= '1' WHEN (entrada = bnes) ELSE
     '0';
-  mux_ula_mem <= "00" WHEN (entrada = r OR entrada = ori OR entrada = addi OR entrada = andi) ELSE
+  mux_ula_mem <= "00" WHEN (entrada = r OR entrada = ori OR entrada = addi OR entrada = andi OR entrada = slti) ELSE
     "10" WHEN (entrada = jal) ELSE
     "11" WHEN (entrada = lui) ELSE
     "01";
   tipo_r <= '1' WHEN (entrada = r) ELSE
     '0';
-  mux_imediato <= '1' WHEN (entrada = lw OR entrada = sw OR entrada = ori OR entrada = addi OR entrada = andi) ELSE
+  mux_imediato <= '1' WHEN (entrada = lw OR entrada = sw OR entrada = ori OR entrada = addi OR entrada = andi OR entrada = slti) ELSE
     '0';
-  hab_escrita_reg <= '0' WHEN (entrada = sw OR entrada = beqs OR entrada = ori OR entrada = lui OR entrada = bnes) ELSE
+  hab_escrita_reg <= '0' WHEN (entrada = sw OR entrada = beqs OR entrada = ori OR entrada = lui OR entrada = bnes OR entrada = slti) ELSE
     '1';
   hab_ori_andi <= '1' WHEN (entrada = ori OR entrada = andi) ELSE
     '0';
