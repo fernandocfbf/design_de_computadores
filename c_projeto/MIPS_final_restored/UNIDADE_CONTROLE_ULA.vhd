@@ -17,7 +17,8 @@ END ENTITY;
 ARCHITECTURE comportamento OF UNIDADE_CONTROLE_ULA IS
   CONSTANT lw : STD_LOGIC_VECTOR(5 DOWNTO 0) := "100011";
   CONSTANT sw : STD_LOGIC_VECTOR(5 DOWNTO 0) := "101011";
-  CONSTANT beqs : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000100";
+  CONSTANT beq : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000100";
+  CONSTANT bne : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000101";
   CONSTANT lui : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001111";
   CONSTANT ori : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001101";
   CONSTANT addi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001000";
@@ -47,7 +48,7 @@ BEGIN
     "0001" WHEN (tipo_r = '0' AND opcode = ori) ELSE -- ori 
     "0010" WHEN (tipo_r = '0' AND opcode = lw) ELSE -- lw 
     "0010" WHEN (tipo_r = '0' AND opcode = sw) ELSE -- sw 
-    "0110" WHEN (tipo_r = '0' AND opcode = beqs) ELSE -- beq  
+    "0110" WHEN (tipo_r = '0' AND (opcode = beq or opcode = bne)) ELSE -- beq/bne 
     "0010" WHEN (tipo_r = '0' AND opcode = addi) ELSE -- addi 
     "0000" WHEN (tipo_r = '0' AND opcode = andi) ELSE -- andi 
     "0000";

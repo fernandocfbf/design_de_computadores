@@ -33,12 +33,13 @@ ARCHITECTURE arch_name OF MIPS_final IS
 	SIGNAL Saida_ULA : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL Saida_estende : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL Saida_estende_lui : STD_LOGIC_VECTOR (31 DOWNTO 0);
-	SIGNAL Saida_unidade_de_controle : STD_LOGIC_VECTOR (12 DOWNTO 0); -- troquei de 11 pra 9
+	SIGNAL Saida_unidade_de_controle : STD_LOGIC_VECTOR (13 DOWNTO 0); -- troquei de 11 pra 9
 	SIGNAL Dado_lido : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL Flag_Ula : STD_LOGIC;
 	SIGNAL CLK : STD_LOGIC;
 	SIGNAL RESET : STD_LOGIC;
 	SIGNAL somador_mux : STD_LOGIC_VECTOR (31 DOWNTO 0);
+	SIGNAL saida_mux_bne : STD_LOGIC;
 	SIGNAL saida_mux_beq : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL saida_shift_left : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL saida_mux_teste : STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -53,15 +54,16 @@ ARCHITECTURE arch_name OF MIPS_final IS
 
 	ALIAS hab_escrita_mem : STD_LOGIC IS Saida_unidade_de_controle(0);
 	ALIAS hab_leitura_mem : STD_LOGIC IS Saida_unidade_de_controle(1);
-	ALIAS beq : STD_LOGIC IS Saida_unidade_de_controle(2);
-	ALIAS mux_ula_mem : STD_LOGIC_VECTOR IS Saida_unidade_de_controle(4 DOWNTO 3);
-	ALIAS tipo_r : STD_LOGIC IS Saida_unidade_de_controle(5);
-	ALIAS mux_imediato : STD_LOGIC IS Saida_unidade_de_controle(6);
-	ALIAS hab_escrita_reg : STD_LOGIC IS Saida_unidade_de_controle(7);
-	ALIAS hab_ori_andi : STD_LOGIC IS Saida_unidade_de_controle(8);
-	ALIAS mux_rt_rd : STD_LOGIC_VECTOR IS Saida_unidade_de_controle(10 downto 9);
-	ALIAS mux_jmp : STD_LOGIC IS Saida_unidade_de_controle(11);
-	ALIAS mux_jr : STD_LOGIC IS Saida_unidade_de_controle(12);
+	ALIAS bne : STD_LOGIC IS Saida_unidade_de_controle(2);
+	ALIAS beq : STD_LOGIC IS Saida_unidade_de_controle(3);
+	ALIAS mux_ula_mem : STD_LOGIC_VECTOR IS Saida_unidade_de_controle(5 DOWNTO 4);
+	ALIAS tipo_r : STD_LOGIC IS Saida_unidade_de_controle(6);
+	ALIAS mux_imediato : STD_LOGIC IS Saida_unidade_de_controle(7);
+	ALIAS hab_escrita_reg : STD_LOGIC IS Saida_unidade_de_controle(8);
+	ALIAS hab_ori_andi : STD_LOGIC IS Saida_unidade_de_controle(9);
+	ALIAS mux_rt_rd : STD_LOGIC_VECTOR IS Saida_unidade_de_controle(11 DOWNTO 10);
+	ALIAS mux_jmp : STD_LOGIC IS Saida_unidade_de_controle(12);
+	ALIAS mux_jr : STD_LOGIC IS Saida_unidade_de_controle(13);
 
 BEGIN
 	CLK <= CLOCK_50;
@@ -191,7 +193,7 @@ BEGIN
 		PORT MAP(
 			entradaA_MUX => SOMADOR_PC,
 			entradaB_MUX => somador_mux,
-			seletor_MUX => Flag_Ula AND beq,
+			seletor_MUX => saida_mux_bne AND (beq OR bne),
 			saida_MUX => saida_mux_beq);
 
 	MUX_ULA_MEM_COMPONENTE : ENTITY work.muxGenerico4x1_vector GENERIC MAP (larguraDados => 32)
@@ -222,9 +224,16 @@ BEGIN
 	MUX_JR_COMPONENTE : ENTITY work.muxGenerico2x1 GENERIC MAP (larguraDados => 32)
 		PORT MAP(
 			entradaA_MUX => saida_mux_jmp,
-			entradaB_MUX => REG1_ULA_B, 
+			entradaB_MUX => REG1_ULA_B,
 			seletor_MUX => mux_jr,
 			saida_MUX => saida_prox_pc);
+
+	MUX_BNE_COMPONENTE : ENTITY work.muxGenerico2x1_1bit
+		PORT MAP(
+			entradaA_MUX => NOT(Flag_Ula),
+			entradaB_MUX => Flag_Ula,
+			seletor_MUX => beq,
+			saida_MUX => saida_mux_bne);
 
 	ROMMIPS : ENTITY work.ROMMIPS GENERIC MAP (dataWidth => 32, addrWidth => 32)
 		PORT MAP(
