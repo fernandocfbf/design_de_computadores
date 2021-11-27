@@ -1,22 +1,20 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;    -- Biblioteca IEEE para funções aritméticas
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL; -- Biblioteca IEEE para funções aritméticas
 
-entity UNIDADE_CONTROLE_ULA is
-    generic
-    (
-        larguraDados : natural := 8 -- n ta sendo usado, acho
-    );
-    port
-    (
-	   opcode:  in STD_LOGIC_VECTOR(5 downto 0);
-      funct:  in STD_LOGIC_VECTOR(5 downto 0);
-      tipo_r:  in STD_LOGIC;
-      ULActrl: out STD_LOGIC_VECTOR(3 downto 0)
-    );
-end entity;
+ENTITY UNIDADE_CONTROLE_ULA IS
+  GENERIC (
+    larguraDados : NATURAL := 8 -- n ta sendo usado, acho
+  );
+  PORT (
+    opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+    funct : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+    tipo_r : IN STD_LOGIC;
+    ULActrl : OUT STD_LOGIC_VECTOR(3 DOWNTO 0)
+  );
+END ENTITY;
 
-architecture comportamento of UNIDADE_CONTROLE_ULA is
+ARCHITECTURE comportamento OF UNIDADE_CONTROLE_ULA IS
   CONSTANT lw : STD_LOGIC_VECTOR(5 DOWNTO 0) := "100011";
   CONSTANT sw : STD_LOGIC_VECTOR(5 DOWNTO 0) := "101011";
   CONSTANT beqs : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000100";
@@ -24,28 +22,34 @@ architecture comportamento of UNIDADE_CONTROLE_ULA is
   CONSTANT ori : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001101";
   CONSTANT addi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001000";
   CONSTANT andi : STD_LOGIC_VECTOR(5 DOWNTO 0) := "001100";
-  
+
   CONSTANT r : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000000";
-  
+
   CONSTANT jmp : STD_LOGIC_VECTOR(5 DOWNTO 0) := "000010";
-  
-	constant zero : std_logic_vector(larguraDados-1 downto 0) := (others => '0');
 
-	begin
-	
-					-- bit3 de ULActrl não é usado, então podemos colocar zero
+  CONSTANT zero : STD_LOGIC_VECTOR(larguraDados - 1 DOWNTO 0) := (OTHERS => '0');
 
-	ULActrl <= "0110" when (tipo_r='1' and funct="100010") else -- sub tipo R
-				  "0010" when (tipo_r='1' and funct="100000") else -- add tipo R
-				  "0111" when (tipo_r='1' and funct="101010") else -- slt tipo R
-				  "0001" when (tipo_r='1' and funct="100101") else -- or tipo R
-				  "0000" when (tipo_r='1' and funct="100100") else -- and tipo R
-				  "0001" when (tipo_r='0' and opcode = ori) else -- ori tipo I
-				  "0010" when (tipo_r='0' and opcode = lw) else -- lw tipo I
-				  "0010" when (tipo_r='0' and opcode = sw) else -- sw tipo I
-				  "0110" when (tipo_r='0' and opcode = beqs) else -- beq tipo I 
-				  "0010" when (tipo_r='0' and opcode = addi) else -- addi tipo I
-				  "0000" when (tipo_r='0' and opcode = andi) else -- andi tipo I
-				  "0000";
-				  -- J tipo J -> não precisa da ULA
-end architecture;
+BEGIN
+
+  -- bit3 de ULActrl não é usado, então podemos colocar zero
+
+  ULActrl <=
+
+    -- tipo R
+    "0110" WHEN (tipo_r = '1' AND funct = "100010") ELSE -- sub 
+    "0010" WHEN (tipo_r = '1' AND funct = "100000") ELSE -- add 
+    "0111" WHEN (tipo_r = '1' AND funct = "101010") ELSE -- slt 
+    "0001" WHEN (tipo_r = '1' AND funct = "100101") ELSE -- or 
+    "0000" WHEN (tipo_r = '1' AND funct = "100100") ELSE -- and 
+    "0000" WHEN (tipo_r = '1' AND funct = "001000") ELSE -- jr 
+
+    -- tipo I
+    "0001" WHEN (tipo_r = '0' AND opcode = ori) ELSE -- ori 
+    "0010" WHEN (tipo_r = '0' AND opcode = lw) ELSE -- lw 
+    "0010" WHEN (tipo_r = '0' AND opcode = sw) ELSE -- sw 
+    "0110" WHEN (tipo_r = '0' AND opcode = beqs) ELSE -- beq  
+    "0010" WHEN (tipo_r = '0' AND opcode = addi) ELSE -- addi 
+    "0000" WHEN (tipo_r = '0' AND opcode = andi) ELSE -- andi 
+    "0000";
+  -- J tipo J -> não precisa da ULA
+END ARCHITECTURE;

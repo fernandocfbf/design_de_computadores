@@ -1,0 +1,42 @@
+Quartus Prime Archive log --	C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/MIPS_final_C.qarlog
+
+Archive:	C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/MIPS_final_C.qar
+Date:		Fri Nov 26 21:23:59 2021
+Quartus Prime		20.1.0 Build 711 06/05/2020 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/MIPS_final.qpf
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/MIPS_final.qsf
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/MIPS_final.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/RAMMIPS.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/ROMMIPS.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/ULA.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/ULA30.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/ULA31.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/ULASomaSub.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/ULA_completa.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/UNIDADE_CONTROLE_ULA.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/assignment_defaults.qdf
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/bancoReg.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/conversorHex7Seg.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/decoder.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/deslocadorGenerico.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/deslocadorGenericoROM.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/edgeDetector.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/estendeSinalGenerico.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/estendeSinalLui.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/muxGenerico2x1.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/muxGenerico2x1_1bit.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/muxGenerico3x1.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/muxGenerico4x1.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/muxGenerico4x1_vector.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/output_files/Waveform.vwf
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/output_files/Waveform1.vwf
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/registradorGenerico.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/somadaConstante.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/somadorGenerico.vhd
+C:/Users/fernando.fincatti/Documents/Insper/design_de_computadores/c_projeto/MIPS_final_restored/somadorGenerico_ula.vhd
+	======= Total: 31 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.

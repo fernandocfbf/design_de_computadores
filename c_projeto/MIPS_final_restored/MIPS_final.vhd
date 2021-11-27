@@ -18,7 +18,7 @@ ENTITY MIPS_final IS
 		SW : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
 		KEY : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 		LEDR : OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
-		
+
 		PC_out_s : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 		ULA_out_s : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 	);
@@ -33,7 +33,7 @@ ARCHITECTURE arch_name OF MIPS_final IS
 	SIGNAL Saida_ULA : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL Saida_estende : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL Saida_estende_lui : STD_LOGIC_VECTOR (31 DOWNTO 0);
-	SIGNAL Saida_unidade_de_controle : STD_LOGIC_VECTOR (11 DOWNTO 0); -- troquei de 11 pra 9
+	SIGNAL Saida_unidade_de_controle : STD_LOGIC_VECTOR (12 DOWNTO 0); -- troquei de 11 pra 9
 	SIGNAL Dado_lido : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL Flag_Ula : STD_LOGIC;
 	SIGNAL CLK : STD_LOGIC;
@@ -46,6 +46,7 @@ ARCHITECTURE arch_name OF MIPS_final IS
 	SIGNAL saida_mux_rt_rd : STD_LOGIC_VECTOR (4 DOWNTO 0);
 	SIGNAL saida_mux_ula_mem : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL saida_prox_pc : STD_LOGIC_VECTOR (31 DOWNTO 0);
+	SIGNAL saida_mux_jmp : STD_LOGIC_VECTOR (31 DOWNTO 0);
 	SIGNAL saida_shift_left_mux : STD_LOGIC_VECTOR (27 DOWNTO 0);
 	SIGNAL ctrl_ULA : STD_LOGIC_VECTOR (3 DOWNTO 0);
 	SIGNAL saida_mux_displays : STD_LOGIC_VECTOR (31 DOWNTO 0);
@@ -58,18 +59,19 @@ ARCHITECTURE arch_name OF MIPS_final IS
 	ALIAS mux_imediato : STD_LOGIC IS Saida_unidade_de_controle(6);
 	ALIAS hab_escrita_reg : STD_LOGIC IS Saida_unidade_de_controle(7);
 	ALIAS hab_ori_andi : STD_LOGIC IS Saida_unidade_de_controle(8);
-	ALIAS mux_rt_rd : STD_LOGIC IS Saida_unidade_de_controle(9);
-	ALIAS mux_jmp : STD_LOGIC IS Saida_unidade_de_controle(10);
+	ALIAS mux_rt_rd : STD_LOGIC_VECTOR IS Saida_unidade_de_controle(10 downto 9);
+	ALIAS mux_jmp : STD_LOGIC IS Saida_unidade_de_controle(11);
+	ALIAS mux_jr : STD_LOGIC IS Saida_unidade_de_controle(12);
 
 BEGIN
 	CLK <= CLOCK_50;
 	--CLK <= KEY(0); --vai de clique em clique
 
---	DETECTOR_DE_BORDA_KEY0 : work.edgeDetector(bordaSubida)
---	PORT MAP(
---		clk => CLOCK_50,
---		entrada => (NOT KEY(0)),
---		saida => CLK);
+	--	DETECTOR_DE_BORDA_KEY0 : work.edgeDetector(bordaSubida)
+	--	PORT MAP(
+	--		clk => CLOCK_50,
+	--		entrada => (NOT KEY(0)),
+	--		saida => CLK);
 
 	MUX_DISPLAYS : ENTITY work.muxGenerico2x1 GENERIC MAP (larguraDados => 32)
 		PORT MAP(
@@ -135,7 +137,7 @@ BEGIN
 
 	UNIDADE_CONTROLE_ULA : ENTITY work.UNIDADE_CONTROLE_ULA
 		PORT MAP(
-		   opcode=> instrucao(31 DOWNTO 26),
+			opcode => instrucao(31 DOWNTO 26),
 			funct => instrucao(5 DOWNTO 0),
 			tipo_r => tipo_r,
 			ULActrl => ctrl_ULA
@@ -192,26 +194,36 @@ BEGIN
 			seletor_MUX => Flag_Ula AND beq,
 			saida_MUX => saida_mux_beq);
 
-	MUX_ULA_MEM_COMPONENTE : ENTITY work.muxGenerico3x1 GENERIC MAP (larguraDados => 32)
+	MUX_ULA_MEM_COMPONENTE : ENTITY work.muxGenerico4x1_vector GENERIC MAP (larguraDados => 32)
 		PORT MAP(
 			entradaA_MUX => Saida_ULA,
 			entradaB_MUX => Dado_lido,
-			entradaC_MUX => Saida_estende_lui,
+			entradaC_MUX => SOMADOR_PC,
+			entradaD_MUX => Saida_estende_lui,
 			seletor_MUX => mux_ula_mem,
 			saida_MUX => saida_mux_ula_mem);
 
-	MUX_RT_RD_COMPONENTE : ENTITY work.muxGenerico2x1 GENERIC MAP (larguraDados => 5)
+	MUX_RT_RD_COMPONENTE : ENTITY work.muxGenerico4x1_vector GENERIC MAP (larguraDados => 5)
 		PORT MAP(
 			entradaA_MUX => instrucao(20 DOWNTO 16),
 			entradaB_MUX => instrucao(15 DOWNTO 11),
+			entradaC_MUX => "11111",
+			entradaD_MUX => "00000",
 			seletor_MUX => mux_rt_rd,
 			saida_MUX => saida_mux_rt_rd);
 
 	MUX_JMP_COMPONENTE : ENTITY work.muxGenerico2x1 GENERIC MAP (larguraDados => 32)
 		PORT MAP(
 			entradaA_MUX => saida_mux_beq,
-			entradaB_MUX => SOMADOR_PC(31 DOWNTO 28) & saida_shift_left_mux, -- instrucao(25 DOWNTO 0) & '0' & '0'
+			entradaB_MUX => SOMADOR_PC(31 DOWNTO 28) & saida_shift_left_mux,
 			seletor_MUX => mux_jmp,
+			saida_MUX => saida_mux_jmp);
+
+	MUX_JR_COMPONENTE : ENTITY work.muxGenerico2x1 GENERIC MAP (larguraDados => 32)
+		PORT MAP(
+			entradaA_MUX => saida_mux_jmp,
+			entradaB_MUX => REG1_ULA_B, 
+			seletor_MUX => mux_jr,
 			saida_MUX => saida_prox_pc);
 
 	ROMMIPS : ENTITY work.ROMMIPS GENERIC MAP (dataWidth => 32, addrWidth => 32)
@@ -265,8 +277,8 @@ BEGIN
 	--	Saida_unidade_de_controle(8) <= sel_mux_rt_rd;
 	--	Saida_unidade_de_controle(9) <= sel_mux_jump;
 
---	LEDR(3 DOWNTO 0) <= saida_mux_displays(27 DOWNTO 24);
---	LEDR(7 DOWNTO 4) <= saida_mux_displays(31 DOWNTO 28);
+	--	LEDR(3 DOWNTO 0) <= saida_mux_displays(27 DOWNTO 24);
+	--	LEDR(7 DOWNTO 4) <= saida_mux_displays(31 DOWNTO 28);
 	PC_out_s <= PC_OUT;
 	ULA_out_s <= Saida_ULA;
 
